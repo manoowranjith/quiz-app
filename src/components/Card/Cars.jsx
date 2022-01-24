@@ -1,25 +1,12 @@
 import React from "react";
+// import { Data } from "../Data/Data";
+import { Input } from "../Input/Input";
+import Button from "../Button/Button";
 function Card()
 {
     const [score, setScore]=React.useState(0);
     // const [disable, setDisable]=React.useState("false")
-    const [questions, setQuestions] = React.useState([
-        {
-            question : "Who is the father of our nation ?",
-            answers : ["Mahathma Gandhi", "Jawaharlal Nehru", "Donald Trump", "Barrack Obama"],
-            correctAnswer : "Mahathma Gandhi"
-        },
-        {
-            question : "What color is the sky ?",
-            answers : ["Red", "Blue", "Green", "Yellow"],
-            correctAnswer : "Blue"
-        },
-        {
-            question : "What color is the fire ?",
-            answers : ["Red", "Blue", "Green", "Yellow"],
-            correctAnswer : "Yellow"
-        }
-    ]);
+    const [questions, setQuestions] = React.useState(Input);
 
     // React.useEffect(()=>{
         
@@ -50,10 +37,6 @@ function Card()
     }
     function buttonDisable(index, btn)
     {
-        // console.log(index)
-        // console.log( questions[index].correctAnswer, btn)
-        // document.getElementsByClassName[{index}][0].disabled="true"
-        // document.getElementsByClassName[{index}][0].style.display="none"
         var btnClass= document.getElementsByClassName("btn-"+index)
         for (var i = 0; i < btnClass.length; i++) {
             btnClass[i].disabled=true
@@ -68,7 +51,7 @@ function Card()
     
     return(
             <div className="quiz-root">
-                <h1 id="score-id">Your have answered {score}/{questions.length} </h1>
+                <h1 id="score-id">Your have answered {score}/{questions.length} Correctly</h1>
                 <button id="start-quiz-id" className="start-quiz" onClick={()=>{hideDOM()}}>Start Quiz</button>
                 <div id="quiz-card-id" className="quizCard">
                 {
@@ -77,17 +60,12 @@ function Card()
                         <div className="Card">
                             <h1>{element.question}</h1>
 
-                            {
-                                element.answers.map(btn=>{
-                                    return(
-                                        <button className={"btn-"+index.toString()} onClick={(e)=>{buttonDisable(index, btn)}}>{btn}</button>
-                                    )
-                                })
-                            }
+                            <Button element={element} setScore={setScore} score={score} index={index} questions={questions}/>
                         </div>
                         )
                     })
                 }
+
                 {
                     // console.log(score)
                     <button className="result" onClick={()=>{showDOM()}}>Show Results</button>
